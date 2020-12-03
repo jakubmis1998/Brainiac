@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ title }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="brainiacForm">
+
+        <div class="d-flex justify-content-between">
+            <div class="form-group required">
+                <label>First name</label>
+                <input class="form-control" type="text" formControlName="first_name" placeholder="Type in the first name" required>
+                <span class="text-danger" *ngIf="isValid('first_name')">
+                    First name is required
+                </span>
+            </div>
+
+            <div class="form-group required">
+                <label>Last name</label>
+                <input class="form-control" type="text" formControlName="last_name" placeholder="Type in the last name" required>
+                <span class="text-danger" *ngIf="isValid('last_name')">
+                    Last name is required
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group required">
+            <label>E-mail</label>
+            <input class="form-control" type="text" formControlName="email" placeholder="Type in the email" required>
+            <span class="text-danger" *ngIf="isValid('email')">
+                E-mail is required
+            </span>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button [disabled]="loading" ngbAutofocus type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Close</button>
+    <button [disabled]="loading" type="submit" class="btn btn-primary" (click)="submit()">
+        <i *ngIf="loading" class="fas fa-spinner fa-spin mr-1"></i>Save
+    </button>
+</div>

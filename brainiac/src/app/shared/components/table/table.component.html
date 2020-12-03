@@ -1,0 +1,32 @@
+
+<div class="content">
+    <!-- SPINNER -->
+    <div *ngIf="loading" class="d-flex justify-content-center align-items-center h-100">
+        <i class="fas fa-spinner fa-spin big-spinner"></i>
+    </div>
+
+    <!-- TABLE -->
+    <table *ngIf="!loading" class="table table-striped">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th *ngFor="let column of columns" scope="col">{{ column }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let guy of data">
+                <app-table-row class="row"
+                    [rowData]="guy"
+                    (editEvent)="handleEdition($event)"
+                    (removeEvent)="handleRemoval($event)">
+                </app-table-row>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- PAGINATOR -->
+<ngb-pagination class="d-flex justify-content-center"
+    [collectionSize]="pagination.total"
+    [(page)]="pagination.page"
+    (pageChange)="pageChange()">
+</ngb-pagination>

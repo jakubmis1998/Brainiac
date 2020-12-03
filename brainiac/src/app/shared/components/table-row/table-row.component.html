@@ -1,0 +1,15 @@
+<td class="table-col-25">{{ rowData.id }}</td>
+<td class="table-col-75"><img src="{{ rowData.avatar }}" width="50" height="50"></td>
+<td>{{ rowData.first_name }}</td>
+<td>{{ rowData.last_name }}</td>
+<td>{{ rowData.email }}</td>
+<td class="table-col-100">
+	<div class="d-flex action-buttons">
+		<button class="btn p-0 mr-3" (click)="editBrainiac()">
+			<i class="fas fa-edit"></i>
+		</button>
+		<button class="btn p-0" (click)="deleteBrainiac(rowData.id)">
+			<i class="fas fa-trash-alt"></i>
+		</button>
+	</div>
+</td>

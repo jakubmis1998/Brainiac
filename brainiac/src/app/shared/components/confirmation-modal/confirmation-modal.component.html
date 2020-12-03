@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ title }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>{{ message }}</p>
+</div>
+<div class="modal-footer">
+    <button [disabled]="loading" ngbAutofocus type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">No</button>
+    <button [disabled]="loading" type="submit" class="btn btn-primary" (click)="submit()">
+        <i *ngIf="loading" class="fas fa-spinner fa-spin mr-1"></i>Yes
+    </button>
+</div>

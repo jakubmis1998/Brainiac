@@ -1,0 +1,18 @@
+@import './variables.scss';
+
+td {
+    vertical-align: middle;
+}
+
+.action-buttons i {
+    color: $primary;
+}
+
+@for $i from 1 through 15 {
+  $col-size: 25 * $i;
+
+  .table-col-#{ $col-size } {
+    min-width: #{ $col-size }px;
+    width: #{ $col-size }px;
+  }
+}
