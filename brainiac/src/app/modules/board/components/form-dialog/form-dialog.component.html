@@ -27,9 +27,12 @@
 
         <div class="form-group required">
             <label>E-mail</label>
-            <input class="form-control" type="text" formControlName="email" placeholder="Type in the email" required>
+            <input class="form-control" type="email" email formControlName="email" placeholder="Type in the email" required>
             <span class="text-danger" *ngIf="isValid('email')">
                 E-mail is required
+            </span>
+            <span class="text-danger" *ngIf="brainiacForm.controls.email.errors?.email">
+                It is not e-mail pattern
             </span>
         </div>
     </form>

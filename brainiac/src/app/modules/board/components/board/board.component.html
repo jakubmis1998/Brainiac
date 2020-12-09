@@ -7,19 +7,20 @@
 			<h4 class="mb-0">List of smart guys</h4>
 		</div>
 
-		<div class="d-flex">
-			<button class="btn btn-primary d-flex flex-row align-items-center py-1 px-2" (click)="openAddBrainiacModal()">
-				<i class="fas fa-plus mr-2"></i>
-				Add brainiac
-			</button>
-		</div>
+		<button class="btn btn-primary d-flex flex-row align-items-center py-1 px-2" (click)="openAddBrainiacModal()">
+			<i class="fas fa-plus mr-2"></i>
+			Add brainiac
+		</button>
 	</div>
 
+	<!-- TABLE -->
 	<app-table
 		[columns]="columns"
 		[data]="people"
 		[pagination]="pagination"
 		[loading]="loading"
+		(guyEdited)="editBrainiac($event)"
+		(guyRemoved)="removeBrainiac($event)"
 		(pageChanged)="updatePage($event)">
 	</app-table>
 </div>

@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ApiService } from './services/api.service';
-import { FormDialogComponent } from 'src/app/shared/components/form-dialog/form-dialog.component';
+import { ApiService } from 'src/app/modules/board/services/api.service';
+import { FormDialogComponent } from '../form-dialog/form-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SmartGuy } from './interfaces/smart-guy';
+import { SmartGuy } from '../../interfaces/smart-guy';
 import { Subscription } from 'rxjs';
-import { ToastService } from './services/toast.service';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: [ './board.component.scss' ],
-  providers: [ ApiService ]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
@@ -21,7 +21,12 @@ export class BoardComponent implements OnInit, OnDestroy {
   loading = false;
   allSubscription = new Subscription();
 
-  constructor(private apiService: ApiService, private modalService: NgbModal, private toastService: ToastService) { }
+  constructor(
+    private apiService: ApiService,
+    private modalService: NgbModal,
+    private toastService: ToastService,
+    private cdk: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.getBrainiacs();
@@ -50,6 +55,9 @@ export class BoardComponent implements OnInit, OnDestroy {
         error => {
           this.loading = false;
           this.toastService.errorToast(error);
+        },
+        () => {
+          this.cdk.markForCheck();
         }
       )
     );
@@ -60,10 +68,26 @@ export class BoardComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.title = 'Add new brainiac';
     modalRef.result.then(
       response => {
-        this.people.unshift(response);
+        /* OnPush - change reference, not value */
+        this.people = [response, ...this.people] as SmartGuy[];
         this.toastService.successToast('New brainiac created!');
+        this.cdk.markForCheck();
       },
       () => {}
     );
+  }
+
+  editBrainiac(editedGuyData: SmartGuy) {
+    let editedGuy = this.people.find(guy => guy.id === editedGuyData.id);
+    /* Kwestia niespójności nazw w response z API (first_name, firstName) */
+    editedGuy.first_name = editedGuyData.first_name;
+    editedGuy.last_name = editedGuyData.last_name;
+    editedGuy.email = editedGuyData.email;
+    this.toastService.successToast('Brainiac updated!');
+  }
+
+  removeBrainiac(id: number) {
+    this.people = this.people.filter(guy => guy.id !== id);
+    this.toastService.successToast('Brainiac removed!');
   }
 }

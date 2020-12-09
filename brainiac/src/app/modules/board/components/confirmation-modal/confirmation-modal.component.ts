@@ -1,14 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { ApiService } from 'src/app/modules/board/services/api.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { ToastService } from 'src/app/modules/board/services/toast.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-confirmation-modal',
   templateUrl: './confirmation-modal.component.html',
-  styleUrls: ['./confirmation-modal.component.scss']
+  styleUrls: [ './confirmation-modal.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmationModalComponent {
 

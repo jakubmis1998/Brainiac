@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
-import { FormDialogComponent } from '../form-dialog/form-dialog.component';
+import { ConfirmationModalComponent } from '../../../modules/board/components/confirmation-modal/confirmation-modal.component';
+import { FormDialogComponent } from '../../../modules/board/components/form-dialog/form-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SmartGuy } from 'src/app/modules/board/interfaces/smart-guy';
 
 @Component({
   selector: 'app-table-row',
   templateUrl: './table-row.component.html',
-  styleUrls: ['./table-row.component.scss']
+  styleUrls: [ './table-row.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableRowComponent {
 
@@ -18,7 +19,7 @@ export class TableRowComponent {
 
   constructor(private modalService: NgbModal) { }
 
-  deleteBrainiac(id: number): void {
+  deleteBrainiac(id: number) {
     const modalRef = this.modalService.open(ConfirmationModalComponent, { centered: true });
     modalRef.componentInstance.title = 'Exit confirmation';
     modalRef.componentInstance.id = id;
@@ -31,7 +32,7 @@ export class TableRowComponent {
     );
   }
 
-  editBrainiac(): void {
+  editBrainiac() {
     const modalRef = this.modalService.open(FormDialogComponent, { centered: true });
     modalRef.componentInstance.editedGuy = this.rowData;
     modalRef.componentInstance.title = 'Edit brainiac';

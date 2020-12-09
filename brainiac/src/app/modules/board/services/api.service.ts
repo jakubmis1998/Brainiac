@@ -1,12 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SmartGuy } from '../interfaces/smart-guy';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ApiService {
 
   baseUrl = 'https://reqres.in/api';
@@ -14,7 +12,9 @@ export class ApiService {
     'Content-Type': 'application/json'
   });
 
-  getBrainiacs(pagination): Observable<any> {
+  constructor(private http: HttpClient) { }
+
+  getBrainiacs(pagination: { page: number, per_page: number, total: number }): Observable<any> {
     return this.http.get(
       this.baseUrl + '/users?page=' + pagination.page,
       { headers: this.httpHeaders }
@@ -44,5 +44,4 @@ export class ApiService {
     );
   }
 
-  constructor(private http: HttpClient) { }
 }

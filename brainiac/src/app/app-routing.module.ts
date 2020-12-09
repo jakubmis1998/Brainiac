@@ -1,8 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { BoardComponent } from './modules/board/board.component';
-import { DefaultComponent } from './layouts/default/default.component';
-import { HomeComponent } from './modules/home/home.component';
+import { DefaultComponent } from './layouts/components/default/default.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
@@ -10,14 +8,21 @@ const routes: Routes = [
     path: '',
     component: DefaultComponent,
     children: [
-      { path: 'home', component: HomeComponent },
-      { path: 'board', component: BoardComponent }
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'home',
+        loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
+      },
+      {
+        path: 'board',
+        loadChildren: () => import('./modules/board/board.module').then(m => m.BoardModule)
+      }
     ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
